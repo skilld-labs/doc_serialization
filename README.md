@@ -32,3 +32,6 @@ eventually). For example:
      `Format -> Word export -> Settings`.
   4. Add desired fields to the view.
   5. Add a path, and optionally, a filename pattern.
+
+#### Copyright ####
+This code is provided as is under GNU GPL v3
