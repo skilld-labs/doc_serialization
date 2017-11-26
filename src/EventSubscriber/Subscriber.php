@@ -26,7 +26,6 @@ class Subscriber implements EventSubscriberInterface {
    *   The event to get the request object to register on.
    */
   public function onKernelRequest(GetResponseEvent $event) {
-    $event->getRequest()->setFormat('doc', ['application/msword']);
     $event->getRequest()->setFormat('docx', ['application/vnd.openxmlformats-officedocument.wordprocessingml.document']);
   }
 

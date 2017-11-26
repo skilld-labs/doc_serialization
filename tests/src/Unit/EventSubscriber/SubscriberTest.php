@@ -23,7 +23,6 @@ class SubscriberTest extends UnitTestCase {
     // Both doc and docx should be set.
     /** @var \Symfony\Component\HttpFoundation\Request $request */
     $request = $this->prophesize(Request::class);
-    $request->setFormat('doc', ['application/msword'])->shouldBeCalled();
     $request->setFormat('docx', ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'])->shouldBeCalled();
     $event = $this->prophesize(GetResponseEvent::class);
     $event->getRequest()->willReturn($request->reveal());

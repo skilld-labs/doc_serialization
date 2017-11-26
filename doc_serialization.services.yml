@@ -1,8 +1,4 @@
 services:
-  doc_serialization.encoder.doc:
-    class: Drupal\doc_serialization\Encoder\Doc
-    tags:
-      - { name: encoder, format: doc }
   doc_serialization.encoder.docx:
     class: Drupal\doc_serialization\Encoder\Docx
     tags:

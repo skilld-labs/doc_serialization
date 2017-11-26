@@ -35,6 +35,10 @@ class WordExport extends RestExport {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \UnexpectedValueException
+   * @throws \LogicException
+   * @throws \InvalidArgumentException
    */
   public static function buildResponse($view_id, $display_id, array $args = []) {
     // Do not call the parent method, as it makes the response harder to alter.
@@ -128,9 +132,7 @@ class WordExport extends RestExport {
       case 'style':
         // Remove the 'serializer', 'excel_export' and 'data_export'
         // (if available) options to avoid confusion.
-        unset($form['style']['type']['#options']['serializer']);
-        unset($form['style']['type']['#options']['data_export']);
-        unset($form['style']['type']['#options']['excel_export']);
+        unset($form['style']['type']['#options']['serializer'], $form['style']['type']['#options']['data_export'], $form['style']['type']['#options']['excel_export']);
         break;
 
       case 'path':

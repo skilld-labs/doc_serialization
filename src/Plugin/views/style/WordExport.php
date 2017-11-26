@@ -39,21 +39,8 @@ class WordExport extends Serializer {
   public function __construct(array $configuration, $plugin_id, $plugin_definition, SerializerInterface $serializer, array $serializer_formats, array $serializer_format_providers) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer, $serializer_formats, $serializer_format_providers);
 
-    $this->formats = ['doc', 'docx'];
-    $this->formatProviders = ['doc' => 'doc_serialization', 'docx' => 'doc_serialization'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function defineOptions() {
-    $options = parent::defineOptions();
-
-    $options['doc_settings']['contains'] = [
-      'doc_format' => ['default' => 'Word2007'],
-    ];
-
-    return $options;
+    $this->formats = ['docx'];
+    $this->formatProviders = ['docx' => 'doc_serialization'];
   }
 
   /**
@@ -72,23 +59,6 @@ class WordExport extends Serializer {
         // Remove now confusing description.
         unset($form['formats']['#description']);
 
-        // DOC options.
-        $doc_options = $this->options['doc_settings'];
-        $form['doc_settings'] = [
-          '#type' => 'details',
-          '#open' => TRUE,
-          '#title' => $this->t('DOC(X) settings'),
-          '#tree' => TRUE,
-          'doc_format' => [
-            '#type' => 'select',
-            '#title' => $this->t('Format'),
-            '#options' => [
-              // @todo Add all PHPWord supported formats.
-              'Word2007' => $this->t('Word 2007'),
-            ],
-            '#default_value' => $doc_options['doc_format'],
-          ],
-        ];
         break;
     }
   }
