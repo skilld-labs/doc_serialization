@@ -1,4 +1,4 @@
-# Word Serialization
+# Word (DOCX) Serialization
 
 This module provides a Word encoder for the Drupal 8 Serialization API. This
 enables the DOCX format to be used for data output (and potentially input,
