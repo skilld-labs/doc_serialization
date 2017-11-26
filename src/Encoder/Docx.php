@@ -28,7 +28,7 @@ class Docx implements EncoderInterface {
   protected $docFormat = 'Word2007';
 
   /**
-   * Constructs an DOC encoder.
+   * Constructs an DOCX encoder.
    *
    * @param string $doc_format
    *   The DOC format to use.
@@ -66,8 +66,8 @@ class Docx implements EncoderInterface {
 
       $writer = IOFactory::createWriter($word, $this->docFormat);
 
-      // @todo utilize a temporary file perhaps?
-      // @todo This should also support batch processing.
+      // @TODO utilize a temporary file perhaps?
+      // @TODO This should also support batch processing.
       ob_start();
       $writer->save('php://output');
       return ob_get_clean();
@@ -90,21 +90,51 @@ class Docx implements EncoderInterface {
 
     foreach ($data as $row) {
       $i = 0;
+	  // Creating a new Word section for each Views field that is displayed.
       $section = $word->addSection();
       foreach ($row as $value) {
-        // @todo No node info at this point, is there a better way then strpos?
+        // @TODO No node info at this point, is there a better way then strpos?
         if (strpos($value, '<img src="') !== FALSE) {
           $img_url = explode('"', explode('<img src="', $value)[1])[0];
           $section->addImage($base_url . $img_url);
         }
         else {
-          $section->addText($this->formatValue($value));
+			// Parsing line breaks and paragraphs
+			$value = $this->formatValue($value);
+			$text = $this->getTextBetweenTags($value, 'p'); // P tags are already handled by the PHPWord processor, so we're just focussing on the BR tag here.
+			$sectionLines = $section->addTextRun();
+			foreach($text AS $line) {
+			  foreach(explode('<br>', $line) AS $v) {
+			    $sectionLines->addText($v); // Adding the text.
+				$sectionLines->addTextBreak(); // Because there's a BR here, we want to create a newline
+			  }
+			}
         }
-        $i++;
+        $i++; // On to the next Views field
       }
     }
   }
-
+  
+  /**
+   * Retrieves text from between tags
+   *
+   * @param string $string
+   *   The string with value you want to retrieve text from
+   *
+   * @param string $tagname
+   *   What is the tag that you want to filter? Enter without <>. For example: p
+   *
+   * @return matches
+   *   The text within the first found tag.
+   */
+  
+   private function getTextBetweenTags($string, $tagname)
+   {
+      $pattern = "#<\s*?$tagname\b[^>]*>(.*?)</$tagname\b[^>]*>#s";
+      preg_match_all($pattern, $string, $matches);
+      return $matches[1];
+	}
+  
   /**
    * Formats a single value for a given value.
    *
@@ -116,8 +146,8 @@ class Docx implements EncoderInterface {
    */
   protected function formatValue($value) {
     $value = Html::decodeEntities($value);
-    $value = strip_tags($value);
-
+    $value = strip_tags($value, '<p><br>');
+	
     return $value;
   }
 
@@ -129,3 +159,4 @@ class Docx implements EncoderInterface {
   }
 
 }
+
