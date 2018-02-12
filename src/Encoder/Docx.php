@@ -59,7 +59,7 @@ class Docx implements EncoderInterface {
 
     try {
       // Instantiate a new Word object.
-      $word = new PhpWord();
+      $word = new \PhpOffice\PhpWord\PhpWord();
 
       // Set the data.
       $this->setData($word, $data);
