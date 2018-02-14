@@ -4,6 +4,6 @@
   "type": "drupal-module",
   "license": "GPL-2.0+",
   "require": {
-    "phpoffice/phpword": "^0.13"
+    "phpoffice/phpword": "^0.14"
   }
 }
