@@ -6,6 +6,7 @@ use Drupal\Component\Serialization\Exception\InvalidDataTypeException;
 use Drupal\Component\Utility\Html;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Settings;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 
 /**
@@ -56,6 +57,9 @@ class Docx implements EncoderInterface {
         $data = [$data];
         break;
     }
+
+    // Escape HTML Entities
+    Settings::setOutputEscapingEnabled(true);
 
     try {
       // Instantiate a new Word object.
@@ -114,7 +118,7 @@ class Docx implements EncoderInterface {
       }
     }
   }
-  
+
   /**
    * Retrieves text from between tags
    *
@@ -127,14 +131,14 @@ class Docx implements EncoderInterface {
    * @return matches
    *   The text within the first found tag.
    */
-  
+
    private function getTextBetweenTags($string, $tagname)
    {
       $pattern = "#<\s*?$tagname\b[^>]*>(.*?)</$tagname\b[^>]*>#s";
       preg_match_all($pattern, $string, $matches);
       return $matches[1];
 	}
-  
+
   /**
    * Formats a single value for a given value.
    *
@@ -147,7 +151,7 @@ class Docx implements EncoderInterface {
   protected function formatValue($value) {
     $value = Html::decodeEntities($value);
     $value = strip_tags($value, '<p><br>');
-	
+
     return $value;
   }
 
@@ -159,4 +163,3 @@ class Docx implements EncoderInterface {
   }
 
 }
-
