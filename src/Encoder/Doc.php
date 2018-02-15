@@ -6,6 +6,7 @@ use Drupal\Component\Serialization\Exception\InvalidDataTypeException;
 use Drupal\Component\Utility\Html;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Settings;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 
 /**
@@ -54,6 +55,9 @@ class Doc implements EncoderInterface {
         $data = [$data];
         break;
     }
+
+    // Escape HTML Entities
+    Settings::setOutputEscapingEnabled(true);
 
     try {
       // Instantiate a new Word object.
