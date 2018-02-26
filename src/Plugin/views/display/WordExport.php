@@ -162,4 +162,16 @@ class WordExport extends RestExport {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   *
+   * The DisplayPluginBase preview method assumes we will be returning a render
+   * array. The data plugin will already return the serialized string.
+   */
+  public function preview() {
+    return [
+      '#markup' => '<p>' . $this->t('This display does not use preview') . '</p>',
+    ];
+  }
+
 }
