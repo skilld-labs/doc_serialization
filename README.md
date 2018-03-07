@@ -5,7 +5,9 @@ enables the DOCX format to be used for data output (and potentially input,
 eventually). For example:
 
   * Views can output DOCX data via a 'Word Export' display in a View.
-  * Module developers can leverage DOCX as a format when using the 
+  * Leverages phpword Templates processing.You can upload an OOXML document template with included search-patterns (macros) which can be replaced by any value you wish. Only single-line values can be replaced.
+  The search-pattern model is: ${search-pattern}
+  * Module developers can leverage DOCX as a format when using the
     Serialization API.
 
 #### Installation
@@ -18,13 +20,13 @@ eventually). For example:
     * [zendframework/zend-validator 2.4.*](https://github.com/zendframework/zend-validator/tree/release-2.4.13)
     * [zendframework/zend-stdlib 2.4.*](https://github.com/zendframework/zend-stdlib/tree/release-2.4.13)
     * [phpoffice/common 0.2.6](https://github.com/PHPOffice/Common/tree/0.2.6)
-    * [pclzip/pclzip": ^2.8](https://github.com/ivanlanin/pclzip/tree/2.8.2) 
-    
-    The preferred installation method is to 
+    * [pclzip/pclzip": ^2.8](https://github.com/ivanlanin/pclzip/tree/2.8.2)
+
+    The preferred installation method is to
     [use Composer](https://www.drupal.org/node/2404989).
   * The serialization module is required, so install that too.
   * Enable the `doc_serialization` module.
- 
+
 
 #### Creating a view with a DOC display
 
@@ -32,8 +34,10 @@ eventually). For example:
   2. Add a *Word Export* display.
   3. Select 'docx' for the accepted request formats under
      `Format -> Word export -> Settings`.
-  4. Add desired fields to the view.
-  5. Add a path, and optionally, a filename (pattern).
+  4. Add a path, and optionally, a filename (pattern).
+  5. Upload the template file with search patterns same as views field names.
+  6. Add desired fields to the view.
+  7. The view will produce the new doc file with macros replaced by field values.
 
 #### License ####
 
