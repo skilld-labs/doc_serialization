@@ -1,0 +1,29 @@
+#
+# Schema for the Serialization (Word) configuration files.
+#
+
+views.display_extender.doc_serialization:
+  type: views_display_extender
+  label: 'Doc Serialzation'
+  mapping:
+    doc_serialization:
+      type: mapping
+      label: 'Doc Serialzation container'
+      mapping:
+        template_file:
+          type: sequence
+          label: 'Template files IDs'
+          sequence:
+            type: string
+            label: 'File ID'
+views.style.word_export:
+  type: views_style
+  label: 'Word export'
+  mapping:
+    formats:
+      type: sequence
+      label: 'Formats'
+      sequence:
+        type: string
+        label: 'Format'
+
